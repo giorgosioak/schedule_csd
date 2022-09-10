@@ -1,5 +1,5 @@
 # schedule_csd
-https://github.com/giorgosioak/schedule_csd
+https://giorgosioak.github.io/schedule_csd/
 
 
 ## Contribute
