@@ -7,7 +7,7 @@ function reload_table() {
 }
 
 function create_table_header() {
-    header =  "<tr>"
+    header =  "<thead><tr>"
     header += "<th>#</th>"
     header += "<th>ΜΑΘΗΜΑ</th>"
     header += "<th>ΚΑΘΗΓΗΤΗΣ</th>"
@@ -16,13 +16,15 @@ function create_table_header() {
     header += "<th>ΤΕΤΑΡΤΗ</th>"
     header += "<th>ΠΕΜΠΤΗ</th>"
     header += "<th>ΠΑΡΑΣΚΕΥΗ</th>"
-    header += "</tr>"
+    header += "</tr></thead>"
 
     $('#main_table').append(header)
 }
 
 function load_table_data () {
   // console.log($("#main_table"));
+
+  $('#main_table').append("<tbody>")
 
   $.each(programma, function (index, data) {
     // console.log(data);
@@ -39,6 +41,9 @@ function load_table_data () {
     line += '</tr>'
     $('#main_table').append(line)
   })
+
+  $('#main_table').append("</tbody>")
+
 }
 
 $(document).ready(create_table_header)
