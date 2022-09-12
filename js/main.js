@@ -16,16 +16,16 @@ function reload_table() {
 }
 
 function create_table_header() {
-    header =  "<thead><tr>"
-    header += "<th>#</th>"
-    if ( localStorage.getItem("show_class")   == "true" ) { header += "<th>ΜΑΘΗΜΑ</th>" }
-    if ( localStorage.getItem("show_teacher") == "true" ) { header += "<th>ΚΑΘΗΓΗΤΗΣ</th>" }
-    header += "<th>ΔΕΥΤΕΡΑ</th>"
-    header += "<th>ΤΡΙΤΗ</th>"
-    header += "<th>ΤΕΤΑΡΤΗ</th>"
-    header += "<th>ΠΕΜΠΤΗ</th>"
-    header += "<th>ΠΑΡΑΣΚΕΥΗ</th>"
-    header += "</tr></thead>"
+    header =  '<thead><tr>'
+    header += '<th>#</th>'
+    if ( localStorage.getItem("show_class")   == "true" ) { header += '<th>ΜΑΘΗΜΑ</th>' }
+    if ( localStorage.getItem("show_teacher") == "true" ) { header += '<th>ΚΑΘΗΓΗΤΗΣ</th>' }
+    header += '<th class="text-center">ΔΕΥΤΕΡΑ</th>'
+    header += '<th class="text-center">ΤΡΙΤΗ</th>'
+    header += '<th class="text-center">ΤΕΤΑΡΤΗ</th>'
+    header += '<th class="text-center">ΠΕΜΠΤΗ</th>'
+    header += '<th class="text-center">ΠΑΡΑΣΚΕΥΗ</th>'
+    header += '</tr></thead>'
 
     $('#main_table').append(header)
 }
@@ -42,11 +42,11 @@ function load_table_data () {
     line += '<td>' + data['class'] + '</td>'
     if ( localStorage.getItem("show_class")   == "true" ) { line += '<td>' + data['name'] + '</td>' }
     if ( localStorage.getItem("show_teacher") == "true" ) { line += '<td>' + data['teacher'] + '</td>' }
-    line += '<td>' + data['monday'] + '</td>'
-    line += '<td>' + data['tuesday'] + '</td>'
-    line += '<td>' + data['wednesday'] + '</td>'
-    line += '<td>' + data['thursday'] + '</td>'
-    line += '<td>' + data['friday'] + '</td>'
+    line += '<td class="text-center">' + data['monday'] + '</td>'
+    line += '<td class="text-center">' + data['tuesday'] + '</td>'
+    line += '<td class="text-center">' + data['wednesday'] + '</td>'
+    line += '<td class="text-center">' + data['thursday'] + '</td>'
+    line += '<td class="text-center">' + data['friday'] + '</td>'
     line += '</tr>'
     $('#main_table').append(line)
   })
