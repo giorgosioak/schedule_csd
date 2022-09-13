@@ -8,7 +8,6 @@ Schedule located at: js/data.js
 ## ToDo list:
 
 #### High priority
-- Fill data.js with rest of classes
 - Filter classes for personalized calendar (use of localstorage)
 - Tooltips on filter buttons (bootstrap has that functionality)
 

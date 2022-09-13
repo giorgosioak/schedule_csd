@@ -33,7 +33,7 @@ function create_table_header() {
 function load_table_data () {
   // console.log($("#main_table"));
 
-  $('#main_table').append("<tbody>")
+  $('#main_table').append('<tbody class="table-group-divider">')
 
   $.each(programma, function (index, data) {
     // console.log(data);
