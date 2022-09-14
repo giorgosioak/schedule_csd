@@ -21,9 +21,15 @@
         <div class="d-flex justify-content-center">
             <div class="p-2 btn-group" role="group" aria-label="Basic outlined example">
                 <!-- <button type="button" onclick="toggle_class();toggle_teacher();reload_table();" class="btn btn-outline-primary">Hide Class and Teacher</button> -->
-                <button type="button" class="btn active" id="show_class" onclick="toggle_class();reload_table();"><i class="fas fa-book-open"></i></button>
-                <button type="button" class="btn active" id="show_teacher"  onclick="toggle_teacher();reload_table();"><i class="fas fa-chalkboard-teacher"></i></button>
-                <button type="button" class="btn btn-outline-primary" onclick="reload_table();"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+                <button type="button" class="btn active" id="show_class"  data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Show/Hide class" onclick="toggle_class();reload_table();"><i
+                        class="fas fa-book-open"></i></button>
+                <button type="button" class="btn active" id="show_teacher"  data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-title="Show/Hide teacher" onclick="toggle_teacher();reload_table();"><i
+                        class="fas fa-chalkboard-teacher"></i></button>
+                <button type="button" class="btn btn-outline-primary"  data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-title="Reload table contents" onclick="reload_table();"><i class="fa fa-refresh"
+                        aria-hidden="true"></i></button>
             </div>
         </div>
 
@@ -37,7 +43,7 @@
     </main>
     <footer class="footer mt-auto py-3">
         <div class="container">
-            <span class="text-muted"><i>Contribute at https://github.com/giorgosioak/schedule_csd</i></span>
+            <a class="btn" href="https://github.com/giorgosioak/schedule_csd" target="_blank"><i class="fa-brands fa-github"></i> Contribute</a>
         </div>
     </footer>
 
@@ -45,4 +51,5 @@
 </body>
 </html>
 
+<script src="js/bootstrap.bundle.min.js"></script>
 <script src='js/fontawesome.min.js'></script>

@@ -88,7 +88,10 @@ function toggle_class_button_color(){
   }
 }
 
-$(document).ready(create_table_header)
-$(document).ready(load_table_data)
-$(document).ready(toggle_teacher_button_color)
-$(document).ready(toggle_class_button_color)
+$(document).ready(() => {
+  create_table_header();
+  load_table_data();
+  toggle_teacher_button_color();
+  toggle_class_button_color();
+  $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
+});
