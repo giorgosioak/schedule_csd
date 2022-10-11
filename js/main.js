@@ -121,7 +121,6 @@ function toggle_pinned_view() {
 }
 
 function toggle_pinned_view_button_color(){
-  console.log('why')
   if ( localStorage.getItem("pinned_view") == "true" ) {
     $('#pinned_view').removeClass("btn-outline-secondary")
     $('#pinned_view').addClass("btn-outline-success")
@@ -159,7 +158,6 @@ $(document).ready(() => {
   toggle_teacher_button_color();
   toggle_class_button_color();
   toggle_pin_button_color();
-  console.log(1)
   toggle_pinned_view_button_color();
   $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
 });
