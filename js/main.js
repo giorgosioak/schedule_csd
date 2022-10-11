@@ -17,6 +17,7 @@ function reload_table() {
 
 function create_table_header() {
     header =  '<thead><tr>'
+    if ( localStorage.getItem("show_pin") == "true" ) { header +=  '<th>Pin</th>' }
     header += '<th>#</th>'
     if ( localStorage.getItem("show_class")   == "true" ) { header += '<th>ΜΑΘΗΜΑ</th>' }
     if ( localStorage.getItem("show_teacher") == "true" ) { header += '<th>ΚΑΘΗΓΗΤΗΣ</th>' }
@@ -38,7 +39,12 @@ function load_table_data () {
   $.each(programma, function (index, data) {
     // console.log(data);
 
+    if(localStorage.getItem('pinned_view') == "true" && localStorage.getItem(data['class']) == null) {
+      return;
+    }
+
     line = '<tr>'
+    if ( localStorage.getItem("show_pin") == "true" ) { line += '<td>' + return_pin_button(data['class']) + '</td>' }
     line += '<td>' + data['class'] + '</td>'
     if ( localStorage.getItem("show_class")   == "true" ) { line += '<td>' + data['name'] + '</td>' }
     if ( localStorage.getItem("show_teacher") == "true" ) { line += '<td>' + data['teacher'] + '</td>' }
@@ -88,10 +94,72 @@ function toggle_class_button_color(){
   }
 }
 
+
+
+// pin staff
+
+function toggle_pin(){
+  var show_pin = localStorage.getItem("show_pin") == "false" ? true : false
+  localStorage.setItem("show_pin",show_pin);
+  toggle_pin_button_color()  
+}
+
+function toggle_pin_button_color(){
+  if ( localStorage.getItem("show_pin") == "true" ) {
+    $('#show_pin').removeClass("btn-outline-secondary")
+    $('#show_pin').addClass("btn-outline-success")
+  } else {
+    $('#show_pin').removeClass("btn-outline-success")
+    $('#show_pin').addClass("btn-outline-secondary")
+  }
+}
+
+function toggle_pinned_view() {
+  var pinned_view = localStorage.getItem("pinned_view") == "false" ? true : false
+  localStorage.setItem("pinned_view",pinned_view);
+  toggle_pinned_view_button_color()  
+}
+
+function toggle_pinned_view_button_color(){
+  console.log('why')
+  if ( localStorage.getItem("pinned_view") == "true" ) {
+    $('#pinned_view').removeClass("btn-outline-secondary")
+    $('#pinned_view').addClass("btn-outline-success")
+    $('#pinned_view').text("Show Pinned") // rarely text breaks, re-add it to be sure it works
+  } else {
+    $('#pinned_view').removeClass("btn-outline-success")
+    $('#pinned_view').addClass("btn-outline-secondary")
+    $('#pinned_view').text("Show Pinned") // rarely text breaks, re-add it to be sure it works
+  }
+}
+
+function return_pin_button(lclass){
+  let vl = ""
+  if(localStorage.getItem(lclass) == "true") {
+    vl = "checked"
+  }
+  return '<input type="checkbox" ' + vl + ' onclick="add_to_Pinned(`' + lclass + '`);" /> ';
+}
+
+function add_to_Pinned(lclass) {
+  
+  if(localStorage.getItem(lclass)) { 
+    localStorage.removeItem(lclass)
+    return;
+  }
+  localStorage.setItem(lclass, true);
+}
+
+
+
+
 $(document).ready(() => {
   create_table_header();
   load_table_data();
   toggle_teacher_button_color();
   toggle_class_button_color();
+  toggle_pin_button_color();
+  console.log(1)
+  toggle_pinned_view_button_color();
   $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
 });

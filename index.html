@@ -9,8 +9,8 @@
     <link rel='stylesheet' type='text/css' media='screen' href='css/bootstrap.min.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/custom.css'>
     <script src='js/jquery-3.6.1.min.js'></script>
-    <script src='js/data.js'></script>
-    <script src='js/main.js'></script>
+    <script defer src='js/data.js'></script>
+    <script defer src='js/main.js'></script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -18,7 +18,7 @@
         <h4 class="text-center mt-5">ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΡΗΤΗΣ - ΤΜΗΜΑ ΕΠΙΣΤΗΜΗΣ ΥΠΟΛΟΓΙΣΤΩΝ</h4>
         <p class="text-center lead">ΩΡΟΛΟΓΙΟ ΠΡΟΓΡΑΜΜΑ - ΦΘΙΝΟΠΩΡΙΝΟ ΕΞΑΜΗΝΟ 2022</p>
 
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center c-gap">
             <div class="p-2 btn-group" role="group" aria-label="Basic outlined example">
                 <!-- <button type="button" onclick="toggle_class();toggle_teacher();reload_table();" class="btn btn-outline-primary">Hide Class and Teacher</button> -->
                 <button type="button" class="btn active" id="show_class"  data-bs-toggle="tooltip" data-bs-placement="top"
@@ -27,15 +27,22 @@
                 <button type="button" class="btn active" id="show_teacher"  data-bs-toggle="tooltip" data-bs-placement="top"
                         data-bs-title="Show/Hide teacher" onclick="toggle_teacher();reload_table();"><i
                         class="fas fa-chalkboard-teacher"></i></button>
+                <button type="button" class="btn active" id="show_pin"  data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-title="Show/Hide teacher" onclick="toggle_pin();reload_table();"><i class="fa-solid fa-thumbtack"></i></button>
                 <button type="button" class="btn btn-outline-primary"  data-bs-toggle="tooltip" data-bs-placement="top"
                         data-bs-title="Reload table contents" onclick="reload_table();"><i class="fa fa-refresh"
                         aria-hidden="true"></i></button>
+            </div>
+
+            <div class="flex-center justify-content-center">
+                <button type="button" id="pinned_view" onclick="toggle_pinned_view();reload_table();" class="btn active">
+                    Show Pinned</button>
             </div>
         </div>
 
         <div class="container-lg ">
             <div class="table-responsive">
-                <table id="main_table" class="table">
+                <table id="main_table" class="table table-striped">
                 </table>
             </div>
         </div>
