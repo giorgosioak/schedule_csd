@@ -27,16 +27,16 @@
                 <button type="button" class="btn active" id="show_teacher"  data-bs-toggle="tooltip" data-bs-placement="top"
                         data-bs-title="Show/Hide teacher" onclick="toggle_teacher();reload_table();"><i
                         class="fas fa-chalkboard-teacher"></i></button>
-                <button type="button" class="btn active" id="show_pin"  data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-title="Show/Hide teacher" onclick="toggle_pin();reload_table();"><i class="fa-solid fa-thumbtack"></i></button>
+                <button type="button" class="btn active" id="pinned_view"  data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-title="Show/Hide Pinned" onclick="toggle_pinned_view();reload_table();"><i class="fa-solid fa-thumbtack"></i></button>
                 <button type="button" class="btn btn-outline-primary"  data-bs-toggle="tooltip" data-bs-placement="top"
                         data-bs-title="Reload table contents" onclick="reload_table();"><i class="fa fa-refresh"
                         aria-hidden="true"></i></button>
             </div>
 
             <div class="flex-center justify-content-center">
-                <button type="button" id="pinned_view" onclick="toggle_pinned_view();reload_table();" class="btn active">
-                    Show Pinned</button>
+                <button type="button" id="show_pin" onclick="toggle_pin();manage_pinned_view();reload_table();" class="btn active">
+                    Show/Hide Classes</button>
             </div>
         </div>
 

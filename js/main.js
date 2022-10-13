@@ -106,11 +106,11 @@ function toggle_pin(){
 
 function toggle_pin_button_color(){
   if ( localStorage.getItem("show_pin") == "true" ) {
-    $('#show_pin').removeClass("btn-outline-secondary")
-    $('#show_pin').addClass("btn-outline-success")
+    $('#show_pin').addClass("btn-light")
+    $('#show_pin').removeClass("btn-secondary")
   } else {
-    $('#show_pin').removeClass("btn-outline-success")
-    $('#show_pin').addClass("btn-outline-secondary")
+    $('#show_pin').removeClass("btn-light")
+    $('#show_pin').addClass("btn-secondary")
   }
 }
 
@@ -124,12 +124,27 @@ function toggle_pinned_view_button_color(){
   if ( localStorage.getItem("pinned_view") == "true" ) {
     $('#pinned_view').removeClass("btn-outline-secondary")
     $('#pinned_view').addClass("btn-outline-success")
-    $('#pinned_view').text("Show Pinned") // rarely text breaks, re-add it to be sure it works
   } else {
     $('#pinned_view').removeClass("btn-outline-success")
     $('#pinned_view').addClass("btn-outline-secondary")
-    $('#pinned_view').text("Show Pinned") // rarely text breaks, re-add it to be sure it works
   }
+}
+
+let pstate = false;
+function manage_pinned_view() {
+  if(!pstate) { // pstate is false
+    if(localStorage.getItem("pinned_view") == "true") {
+      toggle_pinned_view();
+    }
+    pstate = true;
+  }
+  else { // pstate is true
+    if(localStorage.getItem("pinned_view") == "false") {
+      toggle_pinned_view();
+    }
+    pstate = false;
+  }
+   
 }
 
 function return_pin_button(lclass){
