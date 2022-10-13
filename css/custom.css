@@ -58,3 +58,18 @@
   max-width: 680px;
   padding: 0 15px;
 }
+
+
+.flex-center {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+
+
+
+.c-gap {
+  gap: 30px;
+}
