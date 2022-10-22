@@ -36,10 +36,15 @@ function load_table_data () {
 
   $('#main_table').append('<tbody class="table-group-divider">')
 
+  let unpinned_count = 0;
   $.each(programma, function (index, data) {
     // console.log(data);
 
     if(localStorage.getItem('pinned_view') == "true" && localStorage.getItem(data['class']) == null) {
+      if(++unpinned_count == programma.length) {
+        toggle_pinned_view();
+        reload_table();
+      }
       return;
     }
 
@@ -97,21 +102,24 @@ function toggle_class_button_color(){
 
 
 // pin staff
-
-function toggle_pin(){
-  var show_pin = localStorage.getItem("show_pin") == "false" ? true : false
-  localStorage.setItem("show_pin",show_pin);
-  toggle_pin_button_color()  
+function enable_pin() {
+  localStorage.setItem("show_pin", true);
+  enable_pin_button_color();
 }
 
-function toggle_pin_button_color(){
-  if ( localStorage.getItem("show_pin") == "true" ) {
-    $('#show_pin').addClass("btn-primary")
-    $('#show_pin').removeClass("btn-secondary")
-  } else {
-    $('#show_pin').removeClass("btn-primary")
-    $('#show_pin').addClass("btn-secondary")
-  }
+function disable_pin() {
+  localStorage.setItem("show_pin", false)
+  disable_pin_button_color();
+}
+
+function enable_pin_button_color() {
+  $('#show_pin').addClass("btn-primary")
+  $('#show_pin').removeClass("btn-secondary")
+}
+
+function disable_pin_button_color() {
+  $('#show_pin').removeClass("btn-primary")
+  $('#show_pin').addClass("btn-secondary")
 }
 
 function toggle_pinned_view() {
@@ -172,9 +180,11 @@ function manage_pinned_view_state() {
     localStorage.setItem("pinned_view", false);
     disable_pinned_view_button_color();
 
-    //change the button text to "Save"
+    //change the button text to "Save" and enable pins
     $('#show_pin').html('Save')
-    
+    enable_pin();
+
+
     manage_classes_clicked = true;
   }
   else {
@@ -187,9 +197,10 @@ function manage_pinned_view_state() {
     else 
       disable_pinned_view_button_color();
   
-      //change the button text to "Manage Classes"
+      //change the button text to "Manage Classes" and disable
       $('#show_pin').html('Manage Classes')
-      
+      disable_pin();
+
       manage_classes_clicked = false;
     }
 }
@@ -202,7 +213,6 @@ $(document).ready(() => {
   load_table_data();
   toggle_teacher_button_color();
   toggle_class_button_color();
-  toggle_pin_button_color();
   toggle_pinned_view_button_color();
   $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
 });
