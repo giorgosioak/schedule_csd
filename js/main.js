@@ -202,7 +202,10 @@ function manage_pinned_view_state() {
 }
 
 
-
+function clear_cache() {
+  localStorage.clear();
+  window.location.reload();
+}
 
 $(document).ready(() => {
   create_table_header();
