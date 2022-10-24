@@ -103,11 +103,13 @@ function toggle_class_button_color(){
 
 // pin staff
 function enable_pin() {
+  $('#show_pin').html('Save')
   localStorage.setItem("show_pin", true);
   enable_pin_button_color();
 }
 
 function disable_pin() {
+  $('#show_pin').html('Manage Classes')
   localStorage.setItem("show_pin", false)
   disable_pin_button_color();
 }
@@ -169,38 +171,32 @@ function add_to_Pinned(lclass) {
 // Manage Classes rework
 
 let manage_classes_clicked = false;
+let saved_pinned_view_state = false;
 function manage_pinned_view_state() {
 
   if(!manage_classes_clicked) {
     // save old state of pinned classes
     let p_v_state = localStorage.getItem("pinned_view") == "true" ? true : false;
-    localStorage.setItem('saved_pinned_view_state', p_v_state)
+    saved_pinned_view_state = p_v_state;
 
     // force disable pinned view
     localStorage.setItem("pinned_view", false);
     disable_pinned_view_button_color();
 
     //change the button text to "Save" and enable pins
-    $('#show_pin').html('Save')
     enable_pin();
-
-
     manage_classes_clicked = true;
   }
   else {
     // revert to the saved state
-    let s_p_v_state = localStorage.getItem('saved_pinned_view_state') == "true" ? true : false;
-    
-    localStorage.setItem("pinned_view", s_p_v_state);
-    if(s_p_v_state)
+    localStorage.setItem("pinned_view", saved_pinned_view_state);
+    if(saved_pinned_view_state)
       enable_pinned_view_button_color();
     else 
       disable_pinned_view_button_color();
   
       //change the button text to "Manage Classes" and disable
-      $('#show_pin').html('Manage Classes')
       disable_pin();
-
       manage_classes_clicked = false;
     }
 }
@@ -213,6 +209,8 @@ $(document).ready(() => {
   load_table_data();
   toggle_teacher_button_color();
   toggle_class_button_color();
+  disable_pin();
   toggle_pinned_view_button_color();
+  reload_table();
   $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
 });
