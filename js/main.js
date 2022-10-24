@@ -36,10 +36,15 @@ function load_table_data () {
 
   $('#main_table').append('<tbody class="table-group-divider">')
 
+  let unpinned_count = 0;
   $.each(programma, function (index, data) {
     // console.log(data);
 
     if(localStorage.getItem('pinned_view') == "true" && localStorage.getItem(data['class']) == null) {
+      if(++unpinned_count == programma.length) {
+        toggle_pinned_view();
+        reload_table();
+      }
       return;
     }
 
@@ -97,21 +102,26 @@ function toggle_class_button_color(){
 
 
 // pin staff
-
-function toggle_pin(){
-  var show_pin = localStorage.getItem("show_pin") == "false" ? true : false
-  localStorage.setItem("show_pin",show_pin);
-  toggle_pin_button_color()  
+function enable_pin() {
+  $('#show_pin').html('Save')
+  localStorage.setItem("show_pin", true);
+  enable_pin_button_color();
 }
 
-function toggle_pin_button_color(){
-  if ( localStorage.getItem("show_pin") == "true" ) {
-    $('#show_pin').addClass("btn-light")
-    $('#show_pin').removeClass("btn-secondary")
-  } else {
-    $('#show_pin').removeClass("btn-light")
-    $('#show_pin').addClass("btn-secondary")
-  }
+function disable_pin() {
+  $('#show_pin').html('Manage Classes')
+  localStorage.setItem("show_pin", false)
+  disable_pin_button_color();
+}
+
+function enable_pin_button_color() {
+  $('#show_pin').addClass("btn-primary")
+  $('#show_pin').removeClass("btn-secondary")
+}
+
+function disable_pin_button_color() {
+  $('#show_pin').removeClass("btn-primary")
+  $('#show_pin').addClass("btn-secondary")
 }
 
 function toggle_pinned_view() {
@@ -130,21 +140,14 @@ function toggle_pinned_view_button_color(){
   }
 }
 
-let pstate = false;
-function manage_pinned_view() {
-  if(!pstate) { // pstate is false
-    if(localStorage.getItem("pinned_view") == "true") {
-      toggle_pinned_view();
-    }
-    pstate = true;
-  }
-  else { // pstate is true
-    if(localStorage.getItem("pinned_view") == "false") {
-      toggle_pinned_view();
-    }
-    pstate = false;
-  }
-   
+function enable_pinned_view_button_color() {
+  $('#pinned_view').removeClass("btn-outline-secondary")
+  $('#pinned_view').addClass("btn-outline-success")
+}
+
+function disable_pinned_view_button_color() {
+  $('#pinned_view').removeClass("btn-outline-success")
+  $('#pinned_view').addClass("btn-outline-secondary")
 }
 
 function return_pin_button(lclass){
@@ -165,6 +168,40 @@ function add_to_Pinned(lclass) {
 }
 
 
+// Manage Classes rework
+
+let manage_classes_clicked = false;
+let saved_pinned_view_state = false;
+function manage_pinned_view_state() {
+
+  if(!manage_classes_clicked) {
+    // save old state of pinned classes
+    let p_v_state = localStorage.getItem("pinned_view") == "true" ? true : false;
+    saved_pinned_view_state = p_v_state;
+
+    // force disable pinned view
+    localStorage.setItem("pinned_view", false);
+    disable_pinned_view_button_color();
+
+    //change the button text to "Save" and enable pins
+    enable_pin();
+    manage_classes_clicked = true;
+  }
+  else {
+    // revert to the saved state
+    localStorage.setItem("pinned_view", saved_pinned_view_state);
+    if(saved_pinned_view_state)
+      enable_pinned_view_button_color();
+    else 
+      disable_pinned_view_button_color();
+  
+      //change the button text to "Manage Classes" and disable
+      disable_pin();
+      manage_classes_clicked = false;
+    }
+}
+
+
 
 
 $(document).ready(() => {
@@ -172,7 +209,8 @@ $(document).ready(() => {
   load_table_data();
   toggle_teacher_button_color();
   toggle_class_button_color();
-  toggle_pin_button_color();
+  disable_pin();
   toggle_pinned_view_button_color();
+  reload_table();
   $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
 });
