@@ -215,5 +215,6 @@ $(document).ready(() => {
   disable_pin();
   toggle_pinned_view_button_color();
   reload_table();
+  $('#csd_version').html(csd_version)
   $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
 });

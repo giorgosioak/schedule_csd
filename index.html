@@ -33,9 +33,10 @@
                         data-bs-title="Reload table contents" onclick="reload_table();"><i class="fa fa-refresh"
                         aria-hidden="true"></i></button>
             </div>
+            
 
             <div class="flex-center justify-content-center">
-                <button type="button" id="show_pin" onclick="manage_pinned_view_state();reload_table();" class="btn btn-secondary active">
+                <button type="button" id="show_pin" onclick="manage_pinned_view_state();reload_table();" class="btn btn-secondary">
                     Manage Classes</button>
             </div>
         </div>
@@ -47,12 +48,17 @@
             </div>
         </div>
 
+
+
     </main>
     <footer class="footer mt-auto py-3">
         <div class="container">
-            <a class="btn" href="https://github.com/giorgosioak/schedule_csd" target="_blank"><i class="fa-brands fa-github"></i> Contribute</a>
-            <a class="btn" href="https://github.com/giorgosioak/schedule_csd/issues" target="_blank"><i class="fa fa-bug"></i> Report a bug</a>
-            <button class="btn" onclick="clear_cache();" target="_blank"><i class="fa fa-trash"></i> Clear cache</button>
+        <p class="text-center text-muted">Τελευταία ενημέρωση: <span id="csd_version"></span></p>
+            <div class="d-flex justify-content-center c-gap">
+                <a class="btn" href="https://github.com/giorgosioak/schedule_csd" target="_blank"><i class="fa-brands fa-github"></i> Contribute</a>
+                <a class="btn" href="https://github.com/giorgosioak/schedule_csd/issues" target="_blank"><i class="fa fa-bug"></i> Report a bug</a>
+                <button class="btn" onclick="clear_cache();" target="_blank"><i class="fa fa-trash"></i> Clear cache</button>
+            </div>
         </div>
     </footer>
 
