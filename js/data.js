@@ -1,4 +1,4 @@
-var version = '5/9/2022'
+var version = '28/9/2022'
 var programma = [
   {
     class: 'ΗΥ-100',
@@ -134,9 +134,9 @@ var programma = [
     class: 'ΗΥ-335',
     name: 'Δίκτυα Υπολογιστών',
     teacher: 'ΔΗΜΗΤΡΟΠΟΥΛΟΣ',
-    monday: '12-2 Η.204',
+    monday: '12-2 ΑΜΦ Α',
     tuesday: '',
-    wednesday: '12-2 Η.204',
+    wednesday: '12-2 ΑΜΦ Α',
     thursday: '',
     friday: '12-2 Η.204 (ΦΡΟΝΤ)'
   },
@@ -237,14 +237,14 @@ var programma = [
     monday: '10-12 Α.113',
     tuesday: '',
     wednesday: '10-12 Α.113',
-    thursday: '4-6 Α.113 (ΦΡΟΝΤ)',
-    friday: ''
+    thursday: '',
+    friday: '6-8 Α.113 (ΦΡΟΝΤ)'
   },
   {
     class: 'ΗΥ-454',
     name: 'Τεχνολογία Ανάπτυξης Έξυπνων Διεπαφών και Παιχνιδιών',
     teacher: 'ΣΑΒΒΙΔΗΣ',
-    monday: '10-12 Α.121',
+    monday: '10-12 Η.204',
     tuesday: '12-2 Α.121 (ΦΡΟΝΤ)',
     wednesday: '',
     thursday: '10-12 Α.121',
@@ -425,9 +425,9 @@ var programma = [
     name: 'Προχωρημένα Θέματα Υπολογιστικής Όρασης',
     teacher: 'ΑΡΓΥΡΟΣ',
     monday: '',
-    tuesday: '10-12 Ε.311',
+    tuesday: '2-4 Ε.311',
     wednesday: '',
-    thursday: '10-12 Ε.311',
+    thursday: '2-4 Ε.311',
     friday: ''
   }
 ]
