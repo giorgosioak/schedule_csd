@@ -255,6 +255,7 @@ $(document).ready(() => {
   load_table_data();
   toggle_teacher_button_color();
   toggle_class_button_color();
+  toggle_sorted_button_color();
   disable_pin();
   toggle_pinned_view_button_color();
   reload_table();
