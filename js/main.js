@@ -6,6 +6,11 @@ if ( localStorage.getItem("show_class") == null ){
   localStorage.setItem("show_class",true);
 }
 
+if ( localStorage.getItem("sort_classes") == null ){
+  localStorage.setItem("sort_classes",false);
+  toggle_sorted_button_color()
+}
+
 function reload_table() {
 
     $('#main_table thead').remove();
@@ -36,6 +41,13 @@ function load_table_data () {
 
   $('#main_table').append('<tbody class="table-group-divider">')
 
+  if(localStorage.getItem('sort_classes') == "true")
+    // sort primarily on the time score and secondarily on the first day of the week with class
+    programma.sort((c1, c2) => c1.time_score - c2.time_score || date_score(c1) - date_score(c2) );
+  else
+    // sort based on the class codes (e.g. HY-100)
+    programma.sort((c1, c2) => c1.class.localeCompare(c2.class) );
+  
   let unpinned_count = 0;
   $.each(programma, function (index, data) {
     // console.log(data);
@@ -79,6 +91,14 @@ function toggle_class(){
   localStorage.setItem("show_class",show_class);
   toggle_class_button_color();
 }
+
+// Sort classes based on the class code or the date/time
+function toggle_sort(){
+  var sorted = localStorage.getItem("sort_classes") == "false" ? true : false
+  localStorage.setItem("sort_classes",sorted);
+  toggle_sorted_button_color()
+}
+
 function toggle_teacher_button_color(){
   if ( localStorage.getItem("show_teacher") == "true" ) {
     $('#show_teacher').removeClass("btn-outline-secondary")
@@ -99,6 +119,15 @@ function toggle_class_button_color(){
   }
 }
 
+function toggle_sorted_button_color(){
+  if ( localStorage.getItem("sort_classes") == "true" ) {
+    $('#sort_classes').removeClass("btn-outline-secondary")
+    $('#sort_classes').addClass("btn-outline-success")
+  } else {
+    $('#sort_classes').removeClass("btn-outline-success")
+    $('#sort_classes').addClass("btn-outline-secondary")
+  }
+}
 
 
 // pin staff
@@ -201,6 +230,20 @@ function manage_pinned_view_state() {
     }
 }
 
+// return a score (for sorting classes) based on the first day of class 
+function date_score(lesson){
+  if (lesson.monday)
+      return 1;
+  else if (lesson.tuesday)
+      return 2;
+  else if (lesson.wednesday)
+      return 3;
+  else if (lesson.thursday)
+      return 4;
+  else if (lesson.friday)
+      return 5;
+  return 0;
+}
 
 function clear_cache() {
   localStorage.clear();
