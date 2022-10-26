@@ -8,7 +8,8 @@ var programma = [
     tuesday: '4-6 ΑΜΦ ΣΟ',
     wednesday: '',
     thursday: '4-6 ΑΜΦ ΣΟ',
-    friday: '2-4 ΑΜΦ ΣΟ (ΦΡΟΝΤ)'
+    friday: '2-4 ΑΜΦ ΣΟ (ΦΡΟΝΤ)',
+    time_score: 16
   },
   {
     class: 'ΗΥ-108',
@@ -18,7 +19,8 @@ var programma = [
     tuesday: '2-4 Η.204',
     wednesday: '',
     thursday: '12-2 Η.204',
-    friday: ''
+    friday: '',
+    time_score: 14
   },
   {
     class: 'ΗΥ-110',
@@ -28,7 +30,8 @@ var programma = [
     tuesday: '10-12 ΑΜΦ ΣΟ',
     wednesday: '',
     thursday: '10-12 ΑΜΦ ΣΟ',
-    friday: '4-6 ΑΜΦ ΣΟ (ΦΡΟΝΤ)'
+    friday: '4-6 ΑΜΦ ΣΟ (ΦΡΟΝΤ)',
+    time_score: 10
   },
   {
     class: 'ΗΥ-112',
@@ -38,7 +41,8 @@ var programma = [
     tuesday: '',
     wednesday: '10-12 ΑΜΦ ΣΟ',
     thursday: '',
-    friday: '10-12 ΑΜΦ ΣΟ (ΦΡΟΝΤ)'
+    friday: '10-12 ΑΜΦ ΣΟ (ΦΡΟΝΤ)',
+    time_score: 10
   },
   {
     class: 'ΗΥ-118',
@@ -48,7 +52,8 @@ var programma = [
     tuesday: '2-4 ΑΜΦ Α',
     wednesday: '',
     thursday: '2-4 ΑΜΦ Α',
-    friday: ''
+    friday: '',
+    time_score: 14
   },
   {
     class: 'ΗΥ-119',
@@ -58,7 +63,8 @@ var programma = [
     tuesday: '',
     wednesday: '',
     thursday: '6-8 ΑΜΦ ΣΟ',
-    friday: '6-8 ΑΜΦ ΣΟ (ΦΡΟΝΤ)'
+    friday: '6-8 ΑΜΦ ΣΟ (ΦΡΟΝΤ)',
+    time_score: 18
   },
   {
     class: 'ΗΥ-120',
@@ -68,7 +74,8 @@ var programma = [
     tuesday: '',
     wednesday: '12-2 ΑΜΦ ΣΟ',
     thursday: '',
-    friday: '12-2 ΑΜΦ ΣΟ'
+    friday: '12-2 ΑΜΦ ΣΟ',
+    time_score: 12
   },
   {
     class: 'ΗΥ-208',
@@ -78,7 +85,8 @@ var programma = [
     tuesday: '12-2 Η.204',
     wednesday: '',
     thursday: '2-4 Η.204',
-    friday: ''
+    friday: '',
+    time_score: 12
   },
   {
     class: 'ΗΥ-217',
@@ -88,7 +96,8 @@ var programma = [
     tuesday: '',
     wednesday: '10-12 ΑΜΦ Α',
     thursday: '',
-    friday: '10-12 ΑΜΦ Α (ΦΡΟΝΤ)'
+    friday: '10-12 ΑΜΦ Α (ΦΡΟΝΤ)',
+    time_score: 10
   },
   {
     class: 'ΗΥ-240',
@@ -98,7 +107,8 @@ var programma = [
     tuesday: '2-4 ΑΜΦ ΣΟ',
     wednesday: '',
     thursday: '12-2 ΑΜΦ ΣΟ',
-    friday: '12-2 ΑΜΦ Α (ΦΡΟΝΤ)'
+    friday: '12-2 ΑΜΦ Α (ΦΡΟΝΤ)',
+    time_score: 14
   },
   {
     class: 'ΗΥ-252',
@@ -108,7 +118,8 @@ var programma = [
     tuesday: '10-12 ΑΜΦ Α',
     wednesday: '',
     thursday: '10-12 ΑΜΦ Α',
-    friday: '4-6 ΑΜΦ Α (ΦΡΟΝΤ)'
+    friday: '4-6 ΑΜΦ Α (ΦΡΟΝΤ)',
+    time_score: 10
   },
   {
     class: 'ΗΥ-280',
@@ -118,7 +129,8 @@ var programma = [
     tuesday: '',
     wednesday: '2-4 ΑΜΦ ΣΟ',
     thursday: '',
-    friday: '2-4 Α.113 (ΦΡΟΝΤ)'
+    friday: '2-4 Α.113 (ΦΡΟΝΤ)',
+    time_score: 14
   },
   {
     class: 'ΗΥ-330',
@@ -128,7 +140,8 @@ var programma = [
     tuesday: '',
     wednesday: '',
     thursday: '10-12 Α.125',
-    friday: ''
+    friday: '',
+    time_score: 10
   },
   {
     class: 'ΗΥ-335',
@@ -138,7 +151,8 @@ var programma = [
     tuesday: '',
     wednesday: '12-2 ΑΜΦ Α',
     thursday: '',
-    friday: '12-2 Η.204 (ΦΡΟΝΤ)'
+    friday: '12-2 Η.204 (ΦΡΟΝΤ)',
+    time_score: 12
   },
   {
     class: 'ΗΥ-345',
@@ -148,7 +162,8 @@ var programma = [
     tuesday: '4-6 ΑΜΦ Α',
     wednesday: '',
     thursday: '4-6 ΑΜΦ Α',
-    friday: '2-4 ΑΜΦ Α (ΦΡΟΝΤ)'
+    friday: '2-4 ΑΜΦ Α (ΦΡΟΝΤ)',
+    time_score: 16
   },
   {
     class: 'ΗΥ-352',
@@ -158,7 +173,8 @@ var programma = [
     tuesday: '10-12 Α.125 (ΦΡΟΝΤ)',
     wednesday: '10-12 Α.125',
     thursday: '',
-    friday: '10-12 Α.125'
+    friday: '10-12 Α.125',
+    time_score: 10
   },
   {
     class: 'ΗΥ-358',
@@ -168,7 +184,8 @@ var programma = [
     tuesday: '6-8 ΑΜΦ Α',
     wednesday: '6-8 ΑΜΦ Α (ΦΡΟΝΤ)',
     thursday: '6-8 ΑΜΦ Α',
-    friday: ''
+    friday: '',
+    time_score: 18
   },
   {
     class: 'ΗΥ-359',
@@ -178,7 +195,8 @@ var programma = [
     tuesday: '',
     wednesday: '2-4 Α.113 (ΦΡΟΝΤ)',
     thursday: '2-4 Α.113',
-    friday: ''
+    friday: '',
+    time_score: 14
   },
   {
     class: 'ΗΥ-360',
@@ -188,7 +206,8 @@ var programma = [
     tuesday: '',
     wednesday: '4-6 ΑΜΦ Α',
     thursday: '',
-    friday: '4-6 Α.113 (ΦΡΟΝΤ)'
+    friday: '4-6 Α.113 (ΦΡΟΝΤ)',
+    time_score: 16
   },
   {
     class: 'ΗΥ-370',
@@ -198,7 +217,8 @@ var programma = [
     tuesday: '10-12 Α.113',
     wednesday: '',
     thursday: '10-12 Α.113',
-    friday: ''
+    friday: '',
+    time_score: 10
   },
   {
     class: 'ΗΥ-371',
@@ -208,7 +228,8 @@ var programma = [
     tuesday: '6-8 Α.125 ',
     wednesday: '6-8 Α.125 ',
     thursday: '',
-    friday: '6-8 Α.125 (ΦΡΟΝΤ)'
+    friday: '6-8 Α.125 (ΦΡΟΝΤ)',
+    time_score: 18
   },
   {
     class: 'ΗΥ-425',
@@ -218,7 +239,8 @@ var programma = [
     tuesday: '',
     wednesday: '2-4 Η.206',
     thursday: '',
-    friday: '2-4 Η.206'
+    friday: '2-4 Η.206',
+    time_score: 14
   },
   {
     class: 'ΗΥ-436',
@@ -228,7 +250,8 @@ var programma = [
     tuesday: '2-4 Α.121 ',
     wednesday: '',
     thursday: '2-4 Α.121 ',
-    friday: '10-12 Α.121 (ΦΡΟΝΤ)'
+    friday: '10-12 Α.121 (ΦΡΟΝΤ)',
+    time_score: 14
   },
   {
     class: 'ΗΥ-452',
@@ -238,7 +261,8 @@ var programma = [
     tuesday: '',
     wednesday: '10-12 Α.113',
     thursday: '',
-    friday: '6-8 Α.113 (ΦΡΟΝΤ)'
+    friday: '6-8 Α.113 (ΦΡΟΝΤ)',
+    time_score: 10
   },
   {
     class: 'ΗΥ-454',
@@ -248,7 +272,8 @@ var programma = [
     tuesday: '12-2 Α.121 (ΦΡΟΝΤ)',
     wednesday: '',
     thursday: '10-12 Α.121',
-    friday: ''
+    friday: '',
+    time_score: 12
   },
   {
     class: 'ΗΥ-458',
@@ -258,7 +283,8 @@ var programma = [
     tuesday: '',
     wednesday: '',
     thursday: '12-2 Α.125 (ΦΡΟΝΤ)',
-    friday: '12-2 Α.125'
+    friday: '12-2 Α.125',
+    time_score: 12
   },
   {
     class: 'ΗΥ-460',
@@ -268,7 +294,8 @@ var programma = [
     tuesday: '',
     wednesday: '4-6 Η.204 ',
     thursday: '',
-    friday: '4-6 Η.204 '
+    friday: '4-6 Η.204 ',
+    time_score: 16
   },
   {
     class: 'ΗΥ-469',
@@ -278,7 +305,8 @@ var programma = [
     tuesday: '6-8 Η.204',
     wednesday: '',
     thursday: '6-8 Η.204',
-    friday: ''
+    friday: '',
+    time_score: 18
   },
   {
     class: 'ΗΥ-486',
@@ -288,7 +316,8 @@ var programma = [
     tuesday: '10-12 Η.204',
     wednesday: '',
     thursday: '4-6 Η.204 ',
-    friday: '4-6 Α.121 (ΦΡΟΝΤ)'
+    friday: '4-6 Α.121 (ΦΡΟΝΤ)',
+    time_score: 10
   },
   {
     class: 'ΗΥ-487',
@@ -298,7 +327,8 @@ var programma = [
     tuesday: '4-6 Α.121 (ΦΡΟΝΤ)',
     wednesday: '',
     thursday: '4-6 Α.121',
-    friday: ''
+    friday: '',
+    time_score: 16
   },
   {
     class: 'ΗΥ-500',
@@ -308,7 +338,8 @@ var programma = [
     tuesday: '',
     wednesday: '',
     thursday: '12-2 Α.113',
-    friday: ''
+    friday: '',
+    time_score: 12
   },
   {
     class: 'ΗΥ-508',
@@ -318,7 +349,8 @@ var programma = [
     tuesday: '10-12 Η.206',
     wednesday: '',
     thursday: '10-12 Η.206',
-    friday: ''
+    friday: '',
+    time_score: 10
   },
   {
     class: 'ΗΥ-527',
@@ -328,7 +360,8 @@ var programma = [
     tuesday: '',
     wednesday: '10-12 Η.206',
     thursday: '',
-    friday: '12-2 Η.206'
+    friday: '12-2 Η.206',
+    time_score: 10
   },
   {
     class: 'ΗΥ-531',
@@ -338,7 +371,8 @@ var programma = [
     tuesday: '',
     wednesday: '12-2 Η.208',
     thursday: '',
-    friday: ''
+    friday: '',
+    time_score: 12
   },
   {
     class: 'ΗΥ-542',
@@ -348,7 +382,8 @@ var programma = [
     tuesday: '',
     wednesday: '',
     thursday: '2-4 Η.208',
-    friday: '2-4 Η.208'
+    friday: '2-4 Η.208',
+    time_score: 14
   },
   {
     class: 'ΗΥ-546',
@@ -358,7 +393,8 @@ var programma = [
     tuesday: '',
     wednesday: '4-6 Η.206',
     thursday: '',
-    friday: ''
+    friday: '',
+    time_score: 16
   },
   {
     class: 'ΗΥ-559',
@@ -368,7 +404,8 @@ var programma = [
     tuesday: '',
     wednesday: '6-8 Α.121',
     thursday: '',
-    friday: ''
+    friday: '',
+    time_score: 18
   },
   {
     class: 'ΗΥ-567',
@@ -378,7 +415,8 @@ var programma = [
     tuesday: '4-6 Η.208',
     wednesday: '',
     thursday: '4-6 Η.208',
-    friday: ''
+    friday: '',
+    time_score: 16
   },
   {
     class: 'ΗΥ-575',
@@ -388,7 +426,8 @@ var programma = [
     tuesday: '4-6 Η.206',
     wednesday: '',
     thursday: '4-6 Η.206',
-    friday: ''
+    friday: '',
+    time_score: 16
   },
   {
     class: 'ΗΥ-577',
@@ -398,7 +437,8 @@ var programma = [
     tuesday: '',
     wednesday: '12-2 Α.121',
     thursday: '',
-    friday: '12-2 Α.121'
+    friday: '12-2 Α.121',
+    time_score: 12
   },
   {
     class: 'ΗΥ-578',
@@ -408,7 +448,8 @@ var programma = [
     tuesday: '',
     wednesday: '10-12 Η.208',
     thursday: '',
-    friday: '10-12 Η.208'
+    friday: '10-12 Η.208',
+    time_score: 14
   },
   {
     class: 'ΗΥ-647',
@@ -418,7 +459,8 @@ var programma = [
     tuesday: '10-12 Ε.313',
     wednesday: '',
     thursday: '10-12 Ε.313',
-    friday: '10-12 Ε.313'
+    friday: '10-12 Ε.313',
+    time_score: 10
   },
   {
     class: 'ΗΥ-672',
@@ -428,6 +470,7 @@ var programma = [
     tuesday: '2-4 Ε.311',
     wednesday: '',
     thursday: '2-4 Ε.311',
-    friday: ''
+    friday: '',
+    time_score: 14
   }
 ]
