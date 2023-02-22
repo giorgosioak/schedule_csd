@@ -345,11 +345,11 @@ var programma = [
 		class: 'ΗΥ-534',
 		name: 'Αρχιτεκτονική Μεταγωγέων Πακέτων',
 		teacher: 'ΚΑΤΕΒΑΙΝΗΣ / ΧΡΥΣΟΣ',
-		monday: '12-2 Η.206',
+		monday: '',
 		tuesday: '',
-		wednesday: '12-2 Η.206',
-		thursday: '',
-		friday: '',
+		wednesday: '',
+		thursday: '12-2 Η.206',
+		friday: '4-6 Η.206',
 		time_score: 12
 	},
 	{
@@ -513,8 +513,8 @@ var programma = [
 		monday: '',
 		tuesday: '4-6 Η.208',
 		wednesday: '',
-		thursday: '',
-		friday: '4-6 Η.208',
+		thursday: '6-8 Η.208',
+		friday: '',
 		time_score: 16
 	},
 ]
