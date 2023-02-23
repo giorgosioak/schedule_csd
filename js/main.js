@@ -35,10 +35,15 @@ function create_table_header() {
 
     $('#main_table').append(header)
 }
-
+function truncateString(string, limit) {
+  if (string.length > limit) {
+    return string.substring(0, limit)
+  } else {
+    return string
+  }
+}
 function load_table_data () {
   // console.log($("#main_table"));
-
   $('#main_table').append('<tbody class="table-group-divider">')
 
   if(localStorage.getItem('sort_classes') == "true")
@@ -47,10 +52,11 @@ function load_table_data () {
   else
     // sort based on the class codes (e.g. HY-100)
     programma.sort((c1, c2) => c1.class.localeCompare(c2.class) );
-  
+
   let unpinned_count = 0;
   $.each(programma, function (index, data) {
-    // console.log(data);
+    //console.log(data);
+    //console.log(Date());
 
     if(localStorage.getItem('pinned_view') == "true" && localStorage.getItem(data['class']) == null) {
       if(++unpinned_count == programma.length) {
@@ -60,6 +66,49 @@ function load_table_data () {
       return;
     }
 
+
+    if(localStorage.getItem('pinned_view') == 'true' ){
+      if (data['monday']!='' && lessons_read[0].has(data['name']) == false) {
+        string_get_time = ((data['monday']).split(' ', 1))[0].split('-');
+        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
+        else time_meridiem_string = 'pm';
+        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[0].getMonth() + 1) + '/' + nearest_dates[0].getDate() + '/' +  nearest_dates[0].getFullYear() + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
+            (nearest_dates[0].getMonth() + 1) + '/' + nearest_dates[0].getDate() + '/' +  nearest_dates[0].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['MO']});
+        lessons_read[0].add(data['name']);
+      }
+      if (data['tuesday']!='' && lessons_read[1].has(data['name']) == false) {
+        string_get_time = ((data['tuesday']).split(' ', 1))[0].split('-');
+        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
+        else time_meridiem_string = 'pm';
+        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[1].getMonth() + 1) + '/' + nearest_dates[1].getDate() + '/' +  nearest_dates[1].getFullYear()  + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
+            (nearest_dates[1].getMonth() + 1) + '/' + nearest_dates[1].getDate() + '/' +  nearest_dates[1].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['TU']});
+        lessons_read[1].add(data['name']);
+      }
+      if (data['wednesday']!='' && lessons_read[2].has(data['name']) == false) {
+        string_get_time = ((data['wednesday']).split(' ', 1))[0].split('-');
+        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
+        else time_meridiem_string = 'pm';
+        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[2].getMonth() + 1) + '/' + nearest_dates[2].getDate() + '/' +  nearest_dates[2].getFullYear() + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
+            (nearest_dates[2].getMonth() + 1) + '/' + nearest_dates[2].getDate() + '/' +  nearest_dates[2].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['WE']});
+        lessons_read[2].add(data['name']);
+      }
+      if (data['thursday']!='' && lessons_read[3].has(data['name']) == false) {
+        string_get_time = ((data['thursday']).split(' ', 1))[0].split('-');
+        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
+        else time_meridiem_string = 'pm';
+        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[3].getMonth() + 1) + '/' + nearest_dates[3].getDate() + '/' +  nearest_dates[3].getFullYear()  + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
+            (nearest_dates[3].getMonth() + 1) + '/' + nearest_dates[3].getDate() + '/' +  nearest_dates[3].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['TH']});
+        lessons_read[3].add(data['name']);
+      }
+      if (data['friday']!='' && lessons_read[4].has(data['name']) == false) {
+        string_get_time = ((data['friday']).split(' ', 1))[0].split('-');
+        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
+        else time_meridiem_string = 'pm';
+        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[4].getMonth() + 1) + '/' + nearest_dates[4].getDate() + '/' +  nearest_dates[4].getFullYear()  + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
+            (nearest_dates[4].getMonth() + 1) + '/' + nearest_dates[4].getDate() + '/' +  nearest_dates[4].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['FR']});
+        lessons_read[4].add(data['name']);
+      }
+    }
     line = '<tr>'
     if ( localStorage.getItem("show_pin") == "true" ) { line += '<td>' + return_pin_button(data['class']) + '</td>' }
     line += '<td>' + data['class'] + '</td>'
@@ -156,16 +205,24 @@ function disable_pin_button_color() {
 function toggle_pinned_view() {
   var pinned_view = localStorage.getItem("pinned_view") == "false" ? true : false
   localStorage.setItem("pinned_view",pinned_view);
-  toggle_pinned_view_button_color()  
+  toggle_pinned_view_button_color()
 }
 
 function toggle_pinned_view_button_color(){
   if ( localStorage.getItem("pinned_view") == "true" ) {
     $('#pinned_view').removeClass("btn-outline-secondary")
     $('#pinned_view').addClass("btn-outline-success")
+    document.getElementById("dl_calendar").disabled = false;
   } else {
     $('#pinned_view').removeClass("btn-outline-success")
     $('#pinned_view').addClass("btn-outline-secondary")
+    document.getElementById("dl_calendar").disabled = true;
+    calendar = new ics();
+    lessons_read[0].clear();
+    lessons_read[1].clear();
+    lessons_read[2].clear();
+    lessons_read[3].clear();
+    lessons_read[4].clear();
   }
 }
 
@@ -252,6 +309,7 @@ function clear_cache() {
 
 $(document).ready(() => {
   create_table_header();
+  calendar = new ics();
   load_table_data();
   toggle_teacher_button_color();
   toggle_class_button_color();
