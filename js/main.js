@@ -212,11 +212,11 @@ function toggle_pinned_view_button_color(){
   if ( localStorage.getItem("pinned_view") == "true" ) {
     $('#pinned_view').removeClass("btn-outline-secondary")
     $('#pinned_view').addClass("btn-outline-success")
-    document.getElementById("dl_calendar").disabled = false;
+    $('#export_calendar').show();
   } else {
     $('#pinned_view').removeClass("btn-outline-success")
     $('#pinned_view').addClass("btn-outline-secondary")
-    document.getElementById("dl_calendar").disabled = true;
+    $('#export_calendar').hide();
     calendar = new ics();
     lessons_read[0].clear();
     lessons_read[1].clear();
@@ -259,7 +259,6 @@ function add_to_Pinned(lclass) {
 let manage_classes_clicked = false;
 let saved_pinned_view_state = false;
 function manage_pinned_view_state() {
-
   if(!manage_classes_clicked) {
     // save old state of pinned classes
     let p_v_state = localStorage.getItem("pinned_view") == "true" ? true : false;
