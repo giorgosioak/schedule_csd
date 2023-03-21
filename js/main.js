@@ -212,18 +212,11 @@ function toggle_pinned_view_button_color(){
   if ( localStorage.getItem("pinned_view") == "true" ) {
     $('#pinned_view').removeClass("btn-outline-secondary")
     $('#pinned_view').addClass("btn-outline-success")
-    $('#export_calendar').show();
   } else {
     $('#pinned_view').removeClass("btn-outline-success")
     $('#pinned_view').addClass("btn-outline-secondary")
-    $('#export_calendar').hide();
-    calendar = new ics();
-    lessons_read[0].clear();
-    lessons_read[1].clear();
-    lessons_read[2].clear();
-    lessons_read[3].clear();
-    lessons_read[4].clear();
   }
+  toggle_export_button();
 }
 
 function enable_pinned_view_button_color() {
@@ -242,6 +235,20 @@ function return_pin_button(lclass){
     vl = "checked"
   }
   return '<input type="checkbox" ' + vl + ' onclick="add_to_Pinned(`' + lclass + '`);" /> ';
+}
+
+function toggle_export_button(){
+  if ( localStorage.getItem("pinned_view") == "true" ) {
+    $('#export_calendar').show();
+  } else {
+    $('#export_calendar').hide();
+    calendar = new ics();
+    lessons_read[0].clear();
+    lessons_read[1].clear();
+    lessons_read[2].clear();
+    lessons_read[3].clear();
+    lessons_read[4].clear();
+  }
 }
 
 function add_to_Pinned(lclass) {
@@ -283,7 +290,8 @@ function manage_pinned_view_state() {
       //change the button text to "Manage Classes" and disable
       disable_pin();
       manage_classes_clicked = false;
-    }
+  }
+  toggle_export_button();
 }
 
 // return a score (for sorting classes) based on the first day of class 
