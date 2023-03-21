@@ -11,13 +11,46 @@
     <script src='js/jquery-3.6.1.min.js'></script>
     <script defer src='js/data.js'></script>
     <script defer src='js/main.js'></script>
+    <script src='ics/Blob.js'></script>
+    <script src="ics/FileSaver.js"></script>
+    <script src='ics/ics.js'></script>
+    <link rel="shortcut icon" href="./calendar.ico" type="image/x-icon">
+    <script>
+        var calendar = new ics();
+        var TODAY = new Date();
+        var nearest_dates = [
+            new Date(),
+            new Date(),
+            new Date(),
+            new Date(),
+            new Date(),
+        ]
+        nearest_dates[0].setDate(TODAY.getDate() + (7-TODAY.getDay()+1 % 7)-7 || 7);
+        nearest_dates[1].setDate(TODAY.getDate() + (7-TODAY.getDay()+2 % 7)-7 || 7);
+        nearest_dates[2].setDate(TODAY.getDate() + (7-TODAY.getDay()+3 % 7)-7 || 7);
+        nearest_dates[3].setDate(TODAY.getDate() + (7-TODAY.getDay()+4 % 7)-7 || 7);
+        nearest_dates[4].setDate(TODAY.getDate() + (7-TODAY.getDay()+5 % 7)-7 || 7);
+
+        var CALENDAR_END_DATE = '5/19/2023' // MM/DD/YYYY Date to end repetition. Update every semester depending on csd academic calendar
+        var lessons_read = [
+            new Set(),
+            new Set(),
+            new Set(),
+            new Set(),
+            new Set(),
+        ]
+        lessons_read[0].clear();
+        lessons_read[1].clear();
+        lessons_read[2].clear();
+        lessons_read[3].clear();
+        lessons_read[4].clear();
+    </script>
 </head>
 
 <body class="d-flex flex-column h-100">
     <main class="flex-shrink-0">
         <h4 class="text-center mt-5">ΠΑΝΕΠΙΣΤΗΜΙΟ ΚΡΗΤΗΣ - ΤΜΗΜΑ ΕΠΙΣΤΗΜΗΣ ΥΠΟΛΟΓΙΣΤΩΝ</h4>
-        <p class="text-center lead">ΩΡΟΛΟΓΙΟ ΠΡΟΓΡΑΜΜΑ - ΦΘΙΝΟΠΩΡΙΝΟ ΕΞΑΜΗΝΟ 2022</p>
-
+        <p class="text-center lead">ΩΡΟΛΟΓΙΟ ΠΡΟΓΡΑΜΜΑ - ΕΑΡΙΝΟ ΕΞΑΜΗΝΟ 2023</p>
         <div class="d-flex justify-content-center c-gap">
             <div class="p-2 btn-group" role="group" aria-label="Basic outlined example">
                 <!-- <button type="button" onclick="toggle_class();toggle_teacher();reload_table();" class="btn btn-outline-primary">Hide Class and Teacher</button> -->
@@ -35,6 +68,9 @@
                 <button type="button" class="btn btn-outline-primary"  data-bs-toggle="tooltip" data-bs-placement="top"
                         data-bs-title="Reload table contents" onclick="reload_table();"><i class="fa fa-refresh"
                         aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-outline-primary" id="dl_calendar"  data-bs-toggle="tooltip" data-bs-placement="top"
+                        data-bs-title="Download Calendar File. EXPERIMENTAL (recommended to clear cache)" onclick="calendar.download()" disabled><i class="fa fa-angle-double-down"
+                                                                                           aria-hidden="true"></i></button>
             </div>
             
 
@@ -58,8 +94,8 @@
         <div class="container">
         <p class="text-center text-muted">Τελευταία ενημέρωση: <span id="csd_version"></span></p>
             <div class="d-flex justify-content-center c-gap">
-                <a class="btn" href="https://github.com/giorgosioak/schedule_csd" target="_blank"><i class="fa-brands fa-github"></i> Contribute</a>
-                <a class="btn" href="https://github.com/giorgosioak/schedule_csd/issues" target="_blank"><i class="fa fa-bug"></i> Report a bug</a>
+                <a class="btn" href="https://github.com/JohnnyKaz/schedule_csd" target="_blank"><i class="fa-brands fa-github"></i> Contribute</a>
+                <a class="btn" href="https://github.com/JohnnyKaz/schedule_csd/issues" target="_blank"><i class="fa fa-bug"></i> Report a bug</a>
                 <button class="btn" onclick="clear_cache();" target="_blank"><i class="fa fa-trash"></i> Clear cache</button>
             </div>
         </div>
