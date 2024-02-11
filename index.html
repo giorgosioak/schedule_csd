@@ -13,7 +13,6 @@
     <script src="ics/FileSaver.js"></script>
     <script src='ics/ics.js'></script>
     <script src='js/jquery-3.6.1.min.js'></script>
-    <script defer src='js/data.js'></script>
     <script defer src='js/main.js'></script>
     <script defer src='js/calendar.js'></script>
     <link rel="shortcut icon" href="./calendar.ico" type="image/x-icon">
@@ -27,24 +26,24 @@
             <div class="p-2 btn-group" role="group" aria-label="Basic outlined example">
                 <!-- <button type="button" onclick="toggle_class();toggle_teacher();reload_table();" class="btn btn-outline-primary">Hide Class and Teacher</button> -->
                 <button type="button" class="btn active" id="show_class"  data-bs-toggle="tooltip" data-bs-placement="top"
-                    data-bs-title="Show/Hide class" onclick="toggle_class();reload_table();"><i
+                    data-bs-title="Show/Hide class"><i
                         class="fas fa-book-open"></i></button>
                 <button type="button" class="btn active" id="show_teacher"  data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-title="Show/Hide teacher" onclick="toggle_teacher();reload_table();"><i
+                        data-bs-title="Show/Hide teacher"><i
                         class="fas fa-chalkboard-teacher"></i></button>
                 <button type="button" class="btn active" id="pinned_view"  data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-title="Show/Hide Pinned" onclick="toggle_pinned_view();reload_table();"><i class="fa-solid fa-thumbtack"></i></button>
+                        data-bs-title="Show/Hide Pinned"><i class="fa-solid fa-thumbtack"></i></button>
                 <button type="button" class="btn active" id="sort_classes"  data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-title="Sort Classes by time" onclick="toggle_sort();reload_table();"><i
+                        data-bs-title="Sort Classes by time"><i
                         class="fas fa-arrow-down-wide-short"></i></button>
-                <button type="button" class="btn btn-outline-primary"  data-bs-toggle="tooltip" data-bs-placement="top"
-                        data-bs-title="Reload table contents" onclick="reload_table();"><i class="fa fa-refresh"
+                <button type="button" class="btn btn-outline-primary" id="reload_table" data-bs-toggle="tooltip" data-bs-placement="top"
+                    data-bs-title="Reload table contents"><i class="fa fa-refresh"
                         aria-hidden="true"></i></button>
             </div>
             
 
             <div class="flex-center justify-content-center">
-                <button type="button" id="show_pin" onclick="manage_pinned_view_state();reload_table();" class="btn btn-light">
+                <button type="button" id="show_pin" class="btn btn-light">
                     Manage Classes</button>
             </div>
 

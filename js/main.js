@@ -11,13 +11,11 @@ if ( localStorage.getItem("sort_classes") == null ){
   toggle_sorted_button_color()
 }
 
-function reload_table() {
-
-    $('#main_table thead').remove();
-    $('#main_table tbody').remove();
-    create_table_header();
-    load_table_data();
-
+function reload_table(schedule) {
+  $('#main_table thead').remove();
+  $('#main_table tbody').remove();
+  create_table_header();
+  load_table_data(schedule);
 }
 
 function create_table_header() {
@@ -42,83 +40,102 @@ function truncateString(string, limit) {
     return string
   }
 }
-function load_table_data () {
+
+function getPreviousDateWithDay(day) {
+  let today = new Date();
+  let daysToPreviousDay = (today.getDay() - day + 7) % 7;
+
+  today.setDate(today.getDate() - daysToPreviousDay);
+
+  return today;
+}
+
+function compare_time_score(lesson1, lesson2) {
+  let lesson1_time_score = 0;
+  let lesson2_time_score = 0;
+  for (day of ["monday", "tuesday", "wednesday", "thursday", "friday"]) {
+    if (day in lesson1.teaching_slots) {
+      lesson1_time_score = lesson1.teaching_slots[day].start;
+      break
+    }
+  }
+  for (day of ["monday", "tuesday", "wednesday", "thursday", "friday"]) {
+    if (day in lesson2.teaching_slots) {
+      lesson2_time_score = lesson2.teaching_slots[day].start;
+      break
+    }
+  }
+
+  return lesson1_time_score - lesson2_time_score;
+}
+
+function load_table_data(schedule) {
   // console.log($("#main_table"));
   $('#main_table').append('<tbody class="table-group-divider">')
 
-  if(localStorage.getItem('sort_classes') == "true")
+  if (localStorage.getItem('sort_classes') == "true")
     // sort primarily on the time score and secondarily on the first day of the week with class
-    programma.sort((c1, c2) => c1.time_score - c2.time_score || date_score(c1) - date_score(c2) );
+    schedule.sort((c1, c2) => compare_time_score(c1, c2) || date_score(c1) - date_score(c2) || c1.code.localeCompare(c2.code));
   else
     // sort based on the class codes (e.g. HY-100)
-    programma.sort((c1, c2) => c1.class.localeCompare(c2.class) );
+    schedule.sort((c1, c2) => c1.code.localeCompare(c2.code));
 
   let unpinned_count = 0;
-  $.each(programma, function (index, data) {
+  $.each(schedule, function (index, lesson) {
     //console.log(data);
     //console.log(Date());
 
-    if(localStorage.getItem('pinned_view') == "true" && localStorage.getItem(data['class']) == null) {
-      if(++unpinned_count == programma.length) {
+    if (localStorage.getItem('pinned_view') == "true" && localStorage.getItem(lesson.code) == null) {
+      if (++unpinned_count == schedule.length) {
         toggle_pinned_view();
-        reload_table();
+        reload_table(schedule);
       }
       return;
     }
 
 
-    if(localStorage.getItem('pinned_view') == 'true' ){
-      if (data['monday']!='' && lessons_read[0].has(data['name']) == false) {
-        string_get_time = ((data['monday']).split(' ', 1))[0].split('-');
-        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
-        else time_meridiem_string = 'pm';
-        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[0].getMonth() + 1) + '/' + nearest_dates[0].getDate() + '/' +  nearest_dates[0].getFullYear() + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
-            (nearest_dates[0].getMonth() + 1) + '/' + nearest_dates[0].getDate() + '/' +  nearest_dates[0].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['MO']});
-        lessons_read[0].add(data['name']);
-      }
-      if (data['tuesday']!='' && lessons_read[1].has(data['name']) == false) {
-        string_get_time = ((data['tuesday']).split(' ', 1))[0].split('-');
-        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
-        else time_meridiem_string = 'pm';
-        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[1].getMonth() + 1) + '/' + nearest_dates[1].getDate() + '/' +  nearest_dates[1].getFullYear()  + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
-            (nearest_dates[1].getMonth() + 1) + '/' + nearest_dates[1].getDate() + '/' +  nearest_dates[1].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['TU']});
-        lessons_read[1].add(data['name']);
-      }
-      if (data['wednesday']!='' && lessons_read[2].has(data['name']) == false) {
-        string_get_time = ((data['wednesday']).split(' ', 1))[0].split('-');
-        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
-        else time_meridiem_string = 'pm';
-        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[2].getMonth() + 1) + '/' + nearest_dates[2].getDate() + '/' +  nearest_dates[2].getFullYear() + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
-            (nearest_dates[2].getMonth() + 1) + '/' + nearest_dates[2].getDate() + '/' +  nearest_dates[2].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['WE']});
-        lessons_read[2].add(data['name']);
-      }
-      if (data['thursday']!='' && lessons_read[3].has(data['name']) == false) {
-        string_get_time = ((data['thursday']).split(' ', 1))[0].split('-');
-        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
-        else time_meridiem_string = 'pm';
-        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[3].getMonth() + 1) + '/' + nearest_dates[3].getDate() + '/' +  nearest_dates[3].getFullYear()  + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
-            (nearest_dates[3].getMonth() + 1) + '/' + nearest_dates[3].getDate() + '/' +  nearest_dates[3].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['TH']});
-        lessons_read[3].add(data['name']);
-      }
-      if (data['friday']!='' && lessons_read[4].has(data['name']) == false) {
-        string_get_time = ((data['friday']).split(' ', 1))[0].split('-');
-        if (parseInt(string_get_time[0]) === 10) time_meridiem_string = 'am';
-        else time_meridiem_string = 'pm';
-        calendar.addEvent(data['class'], truncateString(data['name'],62), '', (nearest_dates[4].getMonth() + 1) + '/' + nearest_dates[4].getDate() + '/' +  nearest_dates[4].getFullYear()  + ' ' +string_get_time[0] + ':00 ' + time_meridiem_string,
-            (nearest_dates[4].getMonth() + 1) + '/' + nearest_dates[4].getDate() + '/' +  nearest_dates[4].getFullYear() + ' ' +string_get_time[1] + ':00 pm', {freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: ['FR']});
-        lessons_read[4].add(data['name']);
-      }
+    if (localStorage.getItem('pinned_view') == 'true') {
+      Object.entries(lesson.teaching_slots).forEach(([day, slot]) => {
+        if (!lessons_read[day].has(lesson.title)) {
+          let closest_previous_day = getPreviousDateWithDay(day_name_to_int[day]);
+
+          let start_date = new Date(closest_previous_day);
+          start_date.setHours(slot.start, 0);
+
+          let end_date = new Date(closest_previous_day);
+          end_date.setHours(slot.end, 0);
+
+          calendar.addEvent(
+            lesson.code,
+            truncateString(lesson.title, 62),
+            '',
+            start_date,
+            end_date,
+            { freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: [day.slice(0, 2).toUpperCase()] }
+          );
+
+          lessons_read[day].add(lesson.title);
+        }
+      })
     }
     line = '<tr>'
-    if ( localStorage.getItem("show_pin") == "true" ) { line += '<td>' + return_pin_button(data['class']) + '</td>' }
-    line += '<td>' + data['class'] + '</td>'
-    if ( localStorage.getItem("show_class")   == "true" ) { line += '<td>' + data['name'] + '</td>' }
-    if ( localStorage.getItem("show_teacher") == "true" ) { line += '<td>' + data['teacher'] + '</td>' }
-    line += '<td class="text-center">' + data['monday'] + '</td>'
-    line += '<td class="text-center">' + data['tuesday'] + '</td>'
-    line += '<td class="text-center">' + data['wednesday'] + '</td>'
-    line += '<td class="text-center">' + data['thursday'] + '</td>'
-    line += '<td class="text-center">' + data['friday'] + '</td>'
+    if (localStorage.getItem("show_pin") == "true") { line += '<td>' + return_pin_button(lesson.code) + '</td>' }
+    line += '<td>' + lesson.code + '</td>'
+    if (localStorage.getItem("show_class") == "true") { line += '<td>' + lesson.title + '</td>' }
+    if (localStorage.getItem("show_teacher") == "true") { line += '<td>' + lesson.teacher + '</td>' }
+
+    for (day of ["monday", "tuesday", "wednesday", "thursday", "friday"]) {
+      line += '<td class="text-center">'
+      if (day in lesson.teaching_slots) {
+        let slot = lesson.teaching_slots[day];
+        line += slot.start + "-" + slot.end + "<br>" + slot.classroom;
+        if ("comment" in slot)
+          line += " " + slot.comment
+      }
+      line += '</td>';
+
+    }
+
     line += '</tr>'
     $('#main_table').append(line)
   })
@@ -243,11 +260,11 @@ function toggle_export_button(){
   } else {
     $('#export_calendar').hide();
     calendar = new ics();
-    lessons_read[0].clear();
-    lessons_read[1].clear();
-    lessons_read[2].clear();
-    lessons_read[3].clear();
-    lessons_read[4].clear();
+    lessons_read["monday"].clear();
+    lessons_read["tuesday"].clear();
+    lessons_read["wednesday"].clear();
+    lessons_read["thursday"].clear();
+    lessons_read["friday"].clear();
   }
 }
 
@@ -295,17 +312,17 @@ function manage_pinned_view_state() {
 }
 
 // return a score (for sorting classes) based on the first day of class 
-function date_score(lesson){
-  if (lesson.monday)
-      return 1;
-  else if (lesson.tuesday)
-      return 2;
-  else if (lesson.wednesday)
-      return 3;
-  else if (lesson.thursday)
-      return 4;
-  else if (lesson.friday)
-      return 5;
+function date_score(lesson) {
+  if (lesson.teaching_slots.monday)
+    return 1;
+  else if (lesson.teaching_slots.tuesday)
+    return 2;
+  else if (lesson.teaching_slots.wednesday)
+    return 3;
+  else if (lesson.teaching_slots.thursday)
+    return 4;
+  else if (lesson.teaching_slots.friday)
+    return 5;
   return 0;
 }
 
@@ -314,16 +331,51 @@ function clear_cache() {
   window.location.reload();
 }
 
-$(document).ready(() => {
+function setup_event_handlers(data) {
+  $("#show_pin").on("click", () => {
+    manage_pinned_view_state();
+    reload_table(data.schedule);
+  });
+  $("#show_class").on("click", () => {
+    toggle_class();
+    reload_table(data.schedule);
+  });
+  $("#show_teacher").on("click", () => {
+    toggle_teacher();
+    reload_table(data.schedule);
+  });
+  $("#pinned_view").on("click", () => {
+    toggle_pinned_view();
+    reload_table(data.schedule);
+  });
+
+  $("#sort_classes").on("click", () => {
+    toggle_sort();
+    reload_table(data.schedule);
+  });
+
+  $("#reload_table").on("click", () => {
+    reload_table(data.schedule);
+  });
+}
+
+$(document).ready(async () => {
   create_table_header();
   calendar = new ics();
-  load_table_data();
+
+  data_request = new Request("data/data.json");
+
+  data = await fetch(data_request).then((response) => response.json());
+  load_table_data(data.schedule);
+
+  setup_event_handlers(data);
+
+  $('#csd_version').html(data.version);
   toggle_teacher_button_color();
   toggle_class_button_color();
   toggle_sorted_button_color();
   disable_pin();
   toggle_pinned_view_button_color();
-  reload_table();
-  $('#csd_version').html(csd_version)
-  $('[data-bs-toggle="tooltip"]').tooltip({trigger : 'hover'});
+  reload_table(data.schedule);
+  $('[data-bs-toggle="tooltip"]').tooltip({ trigger: 'hover' });
 });
