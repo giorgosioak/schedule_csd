@@ -2,7 +2,7 @@ import csv
 import json
 import re
 import sys
-import openpyxl
+from openpyxl import Workbook, load_workbook
 import argparse
 
 
@@ -72,6 +72,31 @@ def convert_lessons_csv(reader: csv.DictReader):
     return a
 
 
+def convert_lessons_xlsx(wb: Workbook):
+    worksheet = wb.active
+    column_name = {}
+    a: list[Lesson] = []
+
+    day_greek_to_eng = {'ΔΕ': "monday",
+                        'ΤΡ': "tuesday",
+                        'ΤΕ': "wednesday",
+                        'ΠΕ': "thursday",
+                        'ΠΑ': "friday"}
+
+    for i, column in enumerate(worksheet.iter_cols()):
+        column_name[column[0].value] = i
+
+    for row in worksheet.iter_rows(min_row=2):
+        teaching_slot = {}
+        for day_name_gr, day_name_eng in day_greek_to_eng.items():
+            if row[column_name[day_name_gr]].value.strip():
+                teaching_slot[day_name_eng] = parse_timeslot(
+                    row[column_name[day_name_gr]].value.strip())
+        a.append(Lesson(row[column_name['Κωδικός']].value, row[column_name['Τίτλος']].value,
+                        row[column_name['ΔΙΔΑΣΚΩΝ_ΕΠΙΘΕΤΟ']].value, teaching_slot))
+
+    return a
+
 class TimetableEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, Lesson):
@@ -94,7 +119,7 @@ def parse_args(args: list[str]):
     parser.add_argument(
         "-j", "--json-file", help="The path to the output file", required=True, type=argparse.FileType('w'))
     parser.add_argument(
-        "-t", "--type", help="The schedule file type. Only .csv, .xlsx currently supported. If missing, it will be guessed", choices=['csv', 'xlsx'])
+        "-t", "--type", help="The schedule file type. Only .csv, .xlsx currently supported", choices=['csv', 'xlsx'], required=True)
 
     return parser.parse_args(args)
 
@@ -110,7 +135,9 @@ def main(args: list[str]):
                 # Convert from CSV format to lessons
                 schedule = convert_lessons_csv(reader)
         case "xlsx":
-            schedule = []
+            wb = load_workbook(parsed_arguments.schedule)
+
+            schedule = convert_lessons_xlsx(wb)
         case _:
             assert False
 
