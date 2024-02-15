@@ -6,9 +6,10 @@ if ( localStorage.getItem("show_class") == null ){
   localStorage.setItem("show_class",true);
 }
 
-if ( localStorage.getItem("sort_classes") == null ){
-  localStorage.setItem("sort_classes",false);
-  toggle_sorted_button_color()
+  if (localStorage.getItem("pinned_classes") == null) {
+    localStorage.setItem("pinned_classes", JSON.stringify({}));
+    toggle_sorted_button_color()
+  }
 }
 
 function reload_table(schedule) {
@@ -248,9 +249,16 @@ function disable_pinned_view_button_color() {
 
 function return_pin_button(lclass){
   let vl = ""
-  if(localStorage.getItem(lclass) == "true") {
-    vl = "checked"
+  let pinned_classes = localStorage.getItem("pinned_classes");
+
+  if (pinned_classes) {
+    let pinned_classes_json = JSON.parse(pinned_classes);
+
+    if (lclass in pinned_classes_json) {
+      vl = "checked"
+    }
   }
+
   return '<input type="checkbox" ' + vl + ' onclick="add_to_Pinned(`' + lclass + '`);" /> ';
 }
 
@@ -269,9 +277,23 @@ function toggle_export_button(){
 }
 
 function add_to_Pinned(lclass) {
-  
-  if(localStorage.getItem(lclass)) { 
-    localStorage.removeItem(lclass)
+  let pinned_classes = localStorage.getItem("pinned_classes");
+  let pinned_classes_json;
+
+  if (pinned_classes) {
+    pinned_classes_json = JSON.parse(pinned_classes);
+    if (lclass in pinned_classes_json) {
+      delete pinned_classes_json[lclass];
+    } else {
+      pinned_classes_json[lclass] = true;
+    }
+  } else {
+    pinned_classes_json = {};
+    pinned_classes_json[lclass] = true;
+  }
+
+  localStorage.setItem("pinned_classes", JSON.stringify(pinned_classes_json));
+}
     return;
   }
   localStorage.setItem(lclass, true);
