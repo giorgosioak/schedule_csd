@@ -76,55 +76,7 @@ function compare_time_score(lesson1, lesson2) {
   return lesson1_time_score - lesson2_time_score;
 }
 
-function load_table_data(schedule) {
-  // console.log($("#main_table"));
-  $('#main_table').append('<tbody class="table-group-divider">')
-
-  if (localStorage.getItem('sort_classes') == "true")
-    // sort primarily on the time score and secondarily on the first day of the week with class
-    schedule.sort((c1, c2) => compare_time_score(c1, c2) || date_score(c1) - date_score(c2) || c1.code.localeCompare(c2.code));
-  else
-    // sort based on the class codes (e.g. HY-100)
-    schedule.sort((c1, c2) => c1.code.localeCompare(c2.code));
-
-  let unpinned_count = 0;
-  $.each(schedule, function (index, lesson) {
-    //console.log(data);
-    //console.log(Date());
-
-    if (localStorage.getItem('pinned_view') == "true" && localStorage.getItem(lesson.code) == null) {
-      if (++unpinned_count == schedule.length) {
-        toggle_pinned_view();
-        reload_table(schedule);
-      }
-      return;
-    }
-
-
-    if (localStorage.getItem('pinned_view') == 'true') {
-      Object.entries(lesson.teaching_slots).forEach(([day, slot]) => {
-        if (!lessons_read[day].has(lesson.title)) {
-          let closest_previous_day = getPreviousDateWithDay(day_name_to_int[day]);
-
-          let start_date = new Date(closest_previous_day);
-          start_date.setHours(slot.start, 0);
-
-          let end_date = new Date(closest_previous_day);
-          end_date.setHours(slot.end, 0);
-
-          calendar.addEvent(
-            lesson.code,
-            truncateString(lesson.title, 62),
-            '',
-            start_date,
-            end_date,
-            { freq: 'WEEKLY', until: CALENDAR_END_DATE, byday: [day.slice(0, 2).toUpperCase()] }
-          );
-
-          lessons_read[day].add(lesson.title);
-        }
-      })
-    }
+function render_lesson(lesson) {
     line = '<tr>'
     if (localStorage.getItem("show_pin") == "true") { line += '<td>' + return_pin_button(lesson.code) + '</td>' }
     line += '<td>' + lesson.code + '</td>'
@@ -143,9 +95,42 @@ function load_table_data(schedule) {
 
     }
 
-    line += '</tr>'
-    $('#main_table').append(line)
-  })
+  line += '</tr>'
+
+  return line;
+}
+
+function load_table_data(schedule) {
+  // console.log($("#main_table"));
+  $('#main_table').append('<tbody class="table-group-divider">')
+
+  let schedule_array = [];
+
+  if (localStorage.getItem('pinned_view') == "true") {
+    let pinned_classes = JSON.parse(localStorage.getItem("pinned_classes"));
+
+    if ($.isEmptyObject(pinned_classes)) {
+      toggle_pinned_view();
+      schedule_array = Object.values(schedule);
+    } else {
+      for (pinned_class in pinned_classes)
+        schedule_array.push(schedule[pinned_class]);
+    }
+  } else {
+    schedule_array = Object.values(schedule);
+  }
+
+  if (localStorage.getItem('sort_classes') == "true")
+    // sort primarily on the time score and secondarily on the first day of the week with class
+    schedule_array.sort((c1, c2) => compare_time_score(c1, c2) || date_score(c1) - date_score(c2) || c1.code.localeCompare(c2.code));
+  else
+    // sort based on the class codes (e.g. HY-100)
+    schedule_array.sort((c1, c2) => c1.code.localeCompare(c2.code));
+
+  for (lesson of schedule_array) {
+    $('#main_table').append(render_lesson(lesson));
+  }
+
 
   $('#main_table').append("</tbody>")
 }
