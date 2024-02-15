@@ -20,11 +20,11 @@ function reload_table(schedule) {
 }
 
 function create_table_header() {
-    header =  '<thead><tr>'
-    if ( localStorage.getItem("show_pin") == "true" ) { header +=  '<th>Pin</th>' }
+  header = '<thead><tr>'
+  if (localStorage.getItem("show_pin") == "true") { header += '<th>Pin</th>' }
     header += '<th>#</th>'
-    if ( localStorage.getItem("show_class")   == "true" ) { header += '<th>ΜΑΘΗΜΑ</th>' }
-    if ( localStorage.getItem("show_teacher") == "true" ) { header += '<th>ΚΑΘΗΓΗΤΗΣ</th>' }
+  if (localStorage.getItem("show_class") == "true") { header += '<th>ΜΑΘΗΜΑ</th>' }
+  if (localStorage.getItem("show_teacher") == "true") { header += '<th>ΚΑΘΗΓΗΤΗΣ</th>' }
     header += '<th class="text-center">ΔΕΥΤΕΡΑ</th>'
     header += '<th class="text-center">ΤΡΙΤΗ</th>'
     header += '<th class="text-center">ΤΕΤΑΡΤΗ</th>'
@@ -142,32 +142,31 @@ function load_table_data(schedule) {
   })
 
   $('#main_table').append("</tbody>")
-
 }
 
 // Hide Class Name column from table
-function toggle_teacher(){
+function toggle_teacher() {
   var show_teacher = localStorage.getItem("show_teacher") == "false" ? true : false
-  localStorage.setItem("show_teacher",show_teacher);
+  localStorage.setItem("show_teacher", show_teacher);
   toggle_teacher_button_color()
 }
 
 // Hide Teacher column from table
-function toggle_class(){
+function toggle_class() {
   var show_class = localStorage.getItem("show_class") == "false" ? true : false
-  localStorage.setItem("show_class",show_class);
+  localStorage.setItem("show_class", show_class);
   toggle_class_button_color();
 }
 
 // Sort classes based on the class code or the date/time
-function toggle_sort(){
+function toggle_sort() {
   var sorted = localStorage.getItem("sort_classes") == "false" ? true : false
-  localStorage.setItem("sort_classes",sorted);
+  localStorage.setItem("sort_classes", sorted);
   toggle_sorted_button_color()
 }
 
-function toggle_teacher_button_color(){
-  if ( localStorage.getItem("show_teacher") == "true" ) {
+function toggle_teacher_button_color() {
+  if (localStorage.getItem("show_teacher") == "true") {
     $('#show_teacher').removeClass("btn-outline-secondary")
     $('#show_teacher').addClass("btn-outline-success")
   } else {
@@ -176,8 +175,8 @@ function toggle_teacher_button_color(){
   }
 }
 
-function toggle_class_button_color(){
-  if ( localStorage.getItem("show_class") == "true" ) {
+function toggle_class_button_color() {
+  if (localStorage.getItem("show_class") == "true") {
     $('#show_class').removeClass("btn-outline-secondary")
     $('#show_class').addClass("btn-outline-success")
   } else {
@@ -186,8 +185,8 @@ function toggle_class_button_color(){
   }
 }
 
-function toggle_sorted_button_color(){
-  if ( localStorage.getItem("sort_classes") == "true" ) {
+function toggle_sorted_button_color() {
+  if (localStorage.getItem("sort_classes") == "true") {
     $('#sort_classes').removeClass("btn-outline-secondary")
     $('#sort_classes').addClass("btn-outline-success")
   } else {
@@ -222,12 +221,12 @@ function disable_pin_button_color() {
 
 function toggle_pinned_view() {
   var pinned_view = localStorage.getItem("pinned_view") == "false" ? true : false
-  localStorage.setItem("pinned_view",pinned_view);
+  localStorage.setItem("pinned_view", pinned_view);
   toggle_pinned_view_button_color()
 }
 
-function toggle_pinned_view_button_color(){
-  if ( localStorage.getItem("pinned_view") == "true" ) {
+function toggle_pinned_view_button_color() {
+  if (localStorage.getItem("pinned_view") == "true") {
     $('#pinned_view').removeClass("btn-outline-secondary")
     $('#pinned_view').addClass("btn-outline-success")
   } else {
@@ -247,7 +246,7 @@ function disable_pinned_view_button_color() {
   $('#pinned_view').addClass("btn-outline-secondary")
 }
 
-function return_pin_button(lclass){
+function return_pin_button(lclass) {
   let vl = ""
   let pinned_classes = localStorage.getItem("pinned_classes");
 
@@ -305,7 +304,7 @@ function add_to_Pinned(lclass) {
 let manage_classes_clicked = false;
 let saved_pinned_view_state = false;
 function manage_pinned_view_state() {
-  if(!manage_classes_clicked) {
+  if (!manage_classes_clicked) {
     // save old state of pinned classes
     let p_v_state = localStorage.getItem("pinned_view") == "true" ? true : false;
     saved_pinned_view_state = p_v_state;
@@ -321,11 +320,11 @@ function manage_pinned_view_state() {
   else {
     // revert to the saved state
     localStorage.setItem("pinned_view", saved_pinned_view_state);
-    if(saved_pinned_view_state)
+    if (saved_pinned_view_state)
       enable_pinned_view_button_color();
-    else 
+    else
       disable_pinned_view_button_color();
-  
+
       //change the button text to "Manage Classes" and disable
       disable_pin();
       manage_classes_clicked = false;
