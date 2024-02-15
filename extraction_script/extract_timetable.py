@@ -1,4 +1,5 @@
 import csv
+import datetime
 import json
 import re
 import sys
@@ -58,7 +59,7 @@ def convert_lessons_csv(reader: csv.DictReader):
                         'ΤΕ': "wednesday",
                         'ΠΕ': "thursday",
                         'ΠΑ': "friday"}
-    a: list[Lesson] = []
+    lessons: dict[str, Lesson] = {}
     for lesson in reader:
         teaching_slot = {}
         for day_name_gr, day_name_eng in day_greek_to_eng.items():
@@ -66,16 +67,18 @@ def convert_lessons_csv(reader: csv.DictReader):
                 teaching_slot[day_name_eng] = parse_timeslot(
                     lesson[day_name_gr].strip())
 
-        a.append(Lesson(lesson['Κωδικός'], lesson['Τίτλος'],
-                        lesson['ΔΙΔΑΣΚΩΝ_ΕΠΙΘΕΤΟ'], teaching_slot))
+        lessons[lesson['Κωδικός']] = Lesson(lesson['Κωδικός'],
+                                            lesson['Τίτλος'],
+                                            lesson['ΔΙΔΑΣΚΩΝ_ΕΠΙΘΕΤΟ'],
+                                            teaching_slot)
 
-    return a
+    return lessons
 
 
 def convert_lessons_xlsx(wb: Workbook):
     worksheet = wb.active
     column_name = {}
-    a: list[Lesson] = []
+    lessons: dict[str, Lesson] = {}
 
     day_greek_to_eng = {'ΔΕ': "monday",
                         'ΤΡ': "tuesday",
@@ -92,10 +95,12 @@ def convert_lessons_xlsx(wb: Workbook):
             if row[column_name[day_name_gr]].value.strip():
                 teaching_slot[day_name_eng] = parse_timeslot(
                     row[column_name[day_name_gr]].value.strip())
-        a.append(Lesson(row[column_name['Κωδικός']].value, row[column_name['Τίτλος']].value,
-                        row[column_name['ΔΙΔΑΣΚΩΝ_ΕΠΙΘΕΤΟ']].value, teaching_slot))
+        lessons[row[column_name['Κωδικός']].value] = Lesson(row[column_name['Κωδικός']].value,
+                                                            row[column_name['Τίτλος']].value,
+                                                            row[column_name['ΔΙΔΑΣΚΩΝ_ΕΠΙΘΕΤΟ']].value,
+                                                            teaching_slot)
 
-    return a
+    return lessons
 
 class TimetableEncoder(json.JSONEncoder):
     def default(self, o):
@@ -106,8 +111,17 @@ class TimetableEncoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, o)
 
 
-def export_to_json(lesson_info: list[Lesson], version: str):
-    return json.dumps({"version": version, "schedule": lesson_info}, ensure_ascii=False, cls=TimetableEncoder, indent=4)
+def export_to_json(lesson_info: dict[str, Lesson], version: str, end_date: str):
+    end_date_eu = datetime.datetime.strptime(end_date, "%d-%m-%Y")
+    end_date_js = datetime.datetime.strftime(end_date_eu, "%m/%d/%Y")
+
+    data = {
+        "version": version,
+        "schedule": lesson_info,
+        "end_date": end_date_js
+    }
+
+    return json.dumps(data, ensure_ascii=False, cls=TimetableEncoder, indent=4)
 
 
 def parse_args(args: list[str]):
@@ -120,6 +134,8 @@ def parse_args(args: list[str]):
         "-j", "--json-file", help="The path to the output file", required=True, type=argparse.FileType('w'))
     parser.add_argument(
         "-t", "--type", help="The schedule file type. Only .csv, .xlsx currently supported", choices=['csv', 'xlsx'], required=True)
+    parser.add_argument(
+        "-e", "--end-date", help="The DD-MM-YYYY date to end repetition. Set every semester based on CSD academic calendar", required=True)
 
     return parser.parse_args(args)
 
@@ -141,7 +157,8 @@ def main(args: list[str]):
         case _:
             assert False
 
-    json = export_to_json(schedule, parsed_arguments.version)
+    json = export_to_json(
+        schedule, parsed_arguments.version, parsed_arguments.end_date)
 
     parsed_arguments.json_file.write(json)
 
