@@ -261,8 +261,8 @@ function return_pin_button(lclass) {
   return '<input type="checkbox" ' + vl + ' onclick="add_to_Pinned(`' + lclass + '`);" /> ';
 }
 
-function toggle_export_button(){
-  if ( localStorage.getItem("pinned_view") == "true" ) {
+function toggle_export_button() {
+  if (localStorage.getItem("pinned_view") == "true") {
     $('#export_calendar').show();
   } else {
     $('#export_calendar').hide();
