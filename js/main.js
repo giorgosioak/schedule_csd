@@ -293,11 +293,50 @@ function add_to_Pinned(lclass) {
 
   localStorage.setItem("pinned_classes", JSON.stringify(pinned_classes_json));
 }
+
+function download_calendar(schedule, calendar_end_date) {
+  let calendar = new ics();
+  let pinned_classes = localStorage.getItem("pinned_classes");
+
+  if (!pinned_classes) {
+    alert("You don't have any selected classes");
+
     return;
   }
-  localStorage.setItem(lclass, true);
-}
 
+  let pinned_classes_json = JSON.parse(pinned_classes);
+
+  if ($.isEmptyObject(pinned_classes_json)) {
+    alert("You don't have any selected classes");
+
+    return;
+  }
+
+  for (key in pinned_classes_json) {
+    let lesson = schedule[key];
+
+    Object.entries(lesson.teaching_slots).forEach(([day, slot]) => {
+      let closest_previous_day = getPreviousDateWithDay(day_name_to_int[day]);
+
+      let start_date = new Date(closest_previous_day);
+      start_date.setHours(slot.start, 0);
+
+      let end_date = new Date(closest_previous_day);
+      end_date.setHours(slot.end, 0);
+
+      calendar.addEvent(
+        lesson.code,
+        truncateString(lesson.title, 62),
+        '',
+        start_date,
+        end_date,
+        { freq: 'WEEKLY', until: calendar_end_date, byday: [day.slice(0, 2).toUpperCase()] }
+      );
+    })
+  }
+
+  calendar.download();
+}
 
 // Manage Classes rework
 
@@ -378,6 +417,10 @@ function setup_event_handlers(data) {
   $("#reload_table").on("click", () => {
     reload_table(data.schedule);
   });
+
+  $("#export_calendar").on("click", () => {
+    download_calendar(data.schedule, data.end_date);
+  })
 }
 
 $(document).ready(async () => {
