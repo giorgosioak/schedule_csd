@@ -257,12 +257,6 @@ function toggle_export_button() {
     $('#export_calendar').show();
   } else {
     $('#export_calendar').hide();
-    calendar = new ics();
-    lessons_read["monday"].clear();
-    lessons_read["tuesday"].clear();
-    lessons_read["wednesday"].clear();
-    lessons_read["thursday"].clear();
-    lessons_read["friday"].clear();
   }
 }
 
@@ -417,7 +411,6 @@ function setup_event_handlers(data) {
 $(document).ready(async () => {
   initialize_local_storage();
   create_table_header();
-  calendar = new ics();
 
   data_request = new Request("data/data.json");
 
