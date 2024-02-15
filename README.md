@@ -3,7 +3,7 @@ https://giorgosioak.github.io/schedule_csd/
 
 
 ## Contribute
-Schedule located at: js/data.js
+Schedule located at: data/data.json
 
 ## Report a bug or request a feature:
 
