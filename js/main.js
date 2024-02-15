@@ -1,10 +1,16 @@
-if ( localStorage.getItem("show_teacher") == null ){
-  localStorage.setItem("show_teacher",true);
-}
+function initialize_local_storage() {
+  if (localStorage.getItem("show_teacher") == null) {
+    localStorage.setItem("show_teacher", true);
+  }
 
-if ( localStorage.getItem("show_class") == null ){
-  localStorage.setItem("show_class",true);
-}
+  if (localStorage.getItem("show_class") == null) {
+    localStorage.setItem("show_class", true);
+  }
+
+  if (localStorage.getItem("sort_classes") == null) {
+    localStorage.setItem("sort_classes", false);
+    toggle_sorted_button_color()
+  }
 
   if (localStorage.getItem("pinned_classes") == null) {
     localStorage.setItem("pinned_classes", JSON.stringify({}));
@@ -424,6 +430,7 @@ function setup_event_handlers(data) {
 }
 
 $(document).ready(async () => {
+  initialize_local_storage();
   create_table_header();
   calendar = new ics();
 
